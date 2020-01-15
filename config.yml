@@ -1,0 +1,8 @@
+juejin_account: "juejin_account" # 掘金登录账号
+juejin_password: "juejin_password" # 掘金登录密码
+book_ids: # 要爬取的小册id(在url里可以找到)，必须是上面账号已购的小册
+  - 5af56a3c518825426642e004 # 深入理解 RPC : 基于 Python 自建分布式高并发 RPC 服务
+  - 5a7bfe595188257a7349b52a # 大厂 H5 开发实战手册
+  - 5b0778756fb9a07aa632301e # 基于 Go 语言构建企业级的 RESTful API 服务
+chromedriver_path: "chromedriver_mac" # chromedriver可执行文件的绝对路径
+save_dir: "./book" # 保存小册的目录，默认为当前目录

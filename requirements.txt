@@ -1,0 +1,6 @@
+html2text
+Pillow
+pyyaml
+requests
+selenium
+tqdm
