@@ -69,8 +69,8 @@ class Helper:
             chrome_options.add_argument(f'--proxy-server={proxy}')
 
         # 设置成不加载图片
-        prefs = {'profile.managed_default_content_settings.images': 2}
-        chrome_options.add_experimental_option('prefs', prefs)
+        # prefs = {'profile.managed_default_content_settings.images': 2}
+        # chrome_options.add_experimental_option('prefs', prefs)
 
         self.chrome_options = chrome_options
 
@@ -86,14 +86,22 @@ class Helper:
         打开浏览器并登陆掘金
         """
         self.driver.get(self.JUEJIN_HOST)
-        self.driver.find_element_by_class_name('login').click()
+        self.driver.find_element_by_class_name('login-button').click()
         if all([self.juejin_account, self.juejin_password]):
+            # 点击其他登录方式
+            self.driver.find_element_by_css_selector('.prompt-box .clickable').click()
+            random_sleep()
+
             self.driver.find_element_by_name('loginPhoneOrEmail').send_keys(self.juejin_account)
             random_sleep()
             self.driver.find_element_by_name('loginPassword').send_keys(self.juejin_password)
             random_sleep()
             self.driver.find_element_by_css_selector('.panel .btn').click()
             random_sleep()
+
+            # 这里需要滑动验证码
+            print('请滑动验证码...')
+            time.sleep(20)
         else:
             print('你未设置账号密码，请手动输入进行登陆...')
             time.sleep(20)
@@ -150,7 +158,7 @@ class Helper:
                 continue
             section_img_save_dir = os.path.join(img_dir, str(section_order))
             makedirs(section_img_save_dir)
-            section_content_html = self.driver.find_element_by_css_selector('.entry-content.article-content').get_attribute('innerHTML')
+            section_content_html = self.driver.find_element_by_css_selector('.article-content').get_attribute('innerHTML')
             try:
                 self.covert_html_to_markdown(section_order, section_markdown_save_path, section_img_save_dir, section_content_html)
             except Exception as e:
