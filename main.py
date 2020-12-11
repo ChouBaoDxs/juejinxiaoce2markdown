@@ -191,15 +191,21 @@ class Helper:
         filename = f'{int(time.time() * 1000)}'
         pattern = re.compile('data-src="{img_url}.*?</svg>'.format(img_url=url.replace('.', '\.').replace('?', '\?')), re.S)
         file_save_path = os.path.join(section_img_save_dir, filename)
+        if url.startswith('//'):
+            url = 'https:' + url
         res = requests.get(url, headers=self.download_image_headers)
         with open(file_save_path, 'wb') as f:
             f.write(res.content)
-        if res.headers.get('content-type') == 'image/webp':
+        res_content_type = res.headers.get('content-type')
+        if res_content_type == 'image/webp':
             webp_to_jpg(file_save_path, file_save_path)
             re_sub_str = f'img/{section_order}/{filename}.jpg'
-        elif res.headers.get('content-type') == 'image/gif':
+        elif res_content_type == 'image/gif':
             os.rename(file_save_path, f'{file_save_path}.gif')
             re_sub_str = f'img/{section_order}/{filename}.gif'
+        elif res_content_type == 'image/png':
+            os.rename(file_save_path, f'{file_save_path}.png')
+            re_sub_str = f'img/{section_order}/{filename}.png'
         else:
             re_sub_str = f'img/{section_order}/{filename}'
             print(f'未知的图片类型，请手动处理:{url}')
