@@ -100,7 +100,7 @@ class Helper:
             random_sleep()
 
             # 这里需要滑动验证码
-            print('请滑动验证码...')
+            print('请滑动验证码...，验证码无法登录时请改用微信扫码登录')
             time.sleep(20)
         else:
             print('你未设置账号密码，请手动输入进行登陆...')
@@ -121,6 +121,7 @@ class Helper:
         self.driver.get(book_url)
         random_sleep()
         book_name = self.driver.find_element_by_css_selector('.title-line .title').text
+        book_name = book_name.replace('/', '')  # 书籍名称可能带有斜杆
         save_book_dir = os.path.join(self.save_dir, book_name)
         makedirs(save_book_dir)
 
@@ -144,12 +145,17 @@ class Helper:
             while True:
                 try:
                     current_section.click()
+                    if i == 0:  # 第一章页面切换可能要一点时间，稍微等一等
+                        random_sleep()
                 except:
                     random_sleep()
                     self.close_useless_panel()
                     self.driver.execute_script('window.scrollBy(0, 244)')
                 else:
                     break
+
+            section_title = section_title.replace('/', '')  # 替换章节名中的斜杆，会影响路径
+
             sections_pbar.set_description(f'正在处理第{i+1}章-{section_title}')
             section_order = i + 1
             section_markdown_save_path = os.path.join(save_book_dir, f'{section_order}-{section_title}.md')
@@ -221,7 +227,11 @@ class Helper:
         books_pbar = tqdm(self.book_ids)
         for i, book_id in enumerate(books_pbar):
             books_pbar.set_description(f'正在处理第{i+1}本书-{book_id}')
-            self.deal_book(book_id)
+            try:
+                self.deal_book(book_id)
+            except Exception as e:
+                print(f'爬取书籍出错：{book_id}')
+                traceback.print_exc()
 
         input('处理完成，按任意键退出!')
         self.driver.quit()
