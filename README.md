@@ -1,5 +1,15 @@
 # juejinxiaoce2markdown
+Python3 将掘金小册保存为本地 markdown （会处理图片）
+
+# 分支一：master
+Python3 将掘金小册保存为本地 markdown
+
+## 使用指南
+
+# 分支二：crawl_by_chromedriver
 Python3 + Selenium 将掘金小册保存为本地 markdown （会处理图片）
+
+注意：该分支使用到了 Selenium + Chromedriver，配置起来比较繁琐，不推荐使用也不再维护
 
 ## 使用指南
 ### 下载chromedriver
