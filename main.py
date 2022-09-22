@@ -2,8 +2,8 @@ import logging
 import os
 import re
 import traceback
-from urllib.request import urlretrieve
 import yaml
+from urllib.request import urlretrieve
 
 import html2text
 import requests
