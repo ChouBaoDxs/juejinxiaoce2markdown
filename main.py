@@ -111,9 +111,9 @@ class Juejinxiaoce2Markdown:
             res_json = res.json()
             section_title = res_json['data']['section']['title']
             section_title = clear_slash(section_title)
-            markdown_html_str = res_json['data']['section']['content']
-            markdown_str = html2text.html2text(markdown_html_str)
-            # markdown_str = res_json['data']['section']['markdown_show']
+            # markdown_html_str = res_json['data']['section']['content']
+            # markdown_str = html2text.html2text(markdown_html_str)
+            markdown_str = res_json['data']['section']['markdown_show']
             markdown_file_path = os.path.join(book_save_path, f'{section_order}-{section_title}.md')
             section_img_dir = os.path.join(img_dir, f'{section_order}')
             makedirs(section_img_dir)
