@@ -11,7 +11,8 @@ Python3 将掘金小册保存为本地 markdown
     ```
 2. 根据实际情况修改 config.yml
     ```yaml
-    sessionid: "{这里填写自己的sessionid}" # 填写 cookie 里的 sessionid
+    sessionid: "这里填写自己的sessionid" # 填写登录掘金之后 cookie 里的 sessionid
+    # sessionid: "45czd0860863a8982333333333333333"
     book_ids: # 要爬取的小册id(在url里可以找到)，必须是上面账号已购的小册
     #  - 6844733722936377351 # 深入理解 RPC : 基于 Python 自建分布式高并发 RPC 服务
     #  - 6844733712102326279 # 大厂 H5 开发实战手册
